@@ -12,15 +12,12 @@ from ..utils.search_settings import SearchSettings
 DEFAULT_K = 4
 DEFAULT_NUM_HISTORY = 2
 DEFAULT_SCORING_PROFILE_NAME = "test"
-DEFAULT_SEMANTIC_SEARCH = False
 DEFAULT_SEMANTIC_SEARCH_NAME = "test"
 DEFAULT_TEMPERATURE_INPUT_SUMMARIZATION = 0.7
 DEFAULT_TEMPERATURE_KB_QUERY = 0.0
 DEFAULT_TEMPERATURE_RAG = 0.7
-DEFAULT_TEXT_SEARCH = False
 DEFAULT_TOP = 4
 DEFAULT_VECTOR_FIELDS = ["sectionVector", "titleVector", "contentVector"]
-DEFAULT_VECTOR_SEARCH = True
 
 
 def display_pipeline_settings() -> PipelineSettings:
@@ -41,9 +38,11 @@ def display_search_settings() -> SearchSettings:
     semantic_configuration_name = None
     vector_search = st.radio("Vector Search", ["off", "user query", "kb query"], index=1, horizontal=True)
     text_search = st.radio("Text Search", ["off", "user query", "kb query"], horizontal=True)
-    semantic_search = st.checkbox("Semantic Search")
-    if semantic_search:
-        semantic_configuration_name = st.text_input("Semantic Configuration Name", DEFAULT_SEMANTIC_SEARCH_NAME)
+    semantic_search = False
+    if text_search != "off":
+        semantic_search = st.checkbox("Semantic Search")
+        if semantic_search:
+            semantic_configuration_name = st.text_input("Semantic Configuration Name", DEFAULT_SEMANTIC_SEARCH_NAME)
     temperature_kb_query = DEFAULT_TEMPERATURE_KB_QUERY
     if vector_search == "kb query" or text_search == "kb query":
         temperature_kb_query = st.slider("KB Query Temperature", 0.0, 2.0, DEFAULT_TEMPERATURE_KB_QUERY)
