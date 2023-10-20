@@ -22,12 +22,12 @@ DEFAULT_VECTOR_FIELDS = ["sectionVector", "titleVector", "contentVector"]
 
 def display_pipeline_settings() -> PipelineSettings:
     num_history = st.slider("History Length", 0, 10, DEFAULT_NUM_HISTORY)
+    rag_temperature = st.slider("RAG Temperature", 0.0, 2.0, DEFAULT_TEMPERATURE_RAG)
     input_summarization = st.toggle("Input Summarization")
     input_summarization_temperature = DEFAULT_TEMPERATURE_INPUT_SUMMARIZATION
     if input_summarization:
         input_summarization_temperature = st.slider("Input Summarization Temperature", 0.0, 2.0,
                                                     DEFAULT_TEMPERATURE_INPUT_SUMMARIZATION)
-    rag_temperature = st.slider("RAG Temperature", 0.0, 2.0, DEFAULT_TEMPERATURE_RAG)
 
     return PipelineSettings(num_history=num_history, input_summarization=input_summarization,
                             input_summarization_temperature=input_summarization_temperature,
